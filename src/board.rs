@@ -38,15 +38,13 @@ impl Board {
         x: Result<usize, ParseIntError>,
         y: Result<usize, ParseIntError>,
     ) -> bool {
-        match (x, y) {
-            (Ok(x), Ok(y)) => {
-                if x < self.board.len() && y < self.board[0].len() {
-                    if self.board[x][y] == FieldMark::Empt {
-                        return true;
-                    }
-                }
+        if let (Ok(x), Ok(y)) = (x, y) {
+            if x < self.board.len()
+                && y < self.board[0].len()
+                && self.board[x][y] == FieldMark::Empt
+            {
+                return true;
             }
-            _ => {}
         }
         false
     }
@@ -104,7 +102,7 @@ impl Board {
                     }
                 }
             }
-            return best_score;
+            best_score
         } else {
             let mut best_score = f64::INFINITY as i32;
             for i in 0..3 {
@@ -117,7 +115,7 @@ impl Board {
                     }
                 }
             }
-            return best_score;
+            best_score
         }
     }
 }
