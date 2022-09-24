@@ -48,15 +48,25 @@ pub struct AiPlayer {
 }
 impl Player for AiPlayer {
     fn make_move(&self, board: &mut Board) {
-        let mut best_score = -f64::INFINITY as i32;
+        let is_maximazing = self.mark != FieldMark::X;
+        let mut best_score = if !is_maximazing {
+            -f64::INFINITY as i32
+        } else {
+            f64::INFINITY as i32
+        };
         let mut best_move = (0, 0);
         for i in 0..3 {
             for j in 0..3 {
                 if board.get_cell(i, j) == FieldMark::Empt {
                     board.write_cell(i, j, self.mark);
-                    let score = board.minimax(0, false);
+
+                    let score = board.minimax(0, is_maximazing);
                     board.write_cell(i, j, FieldMark::Empt);
-                    if score > best_score {
+
+                    if !is_maximazing && score > best_score {
+                        best_score = score;
+                        best_move = (i, j);
+                    } else if is_maximazing && score < best_score {
                         best_score = score;
                         best_move = (i, j);
                     }

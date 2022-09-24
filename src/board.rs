@@ -13,7 +13,7 @@ impl Board {
         }
     }
     pub fn get_cell(&self, x: usize, y: usize) -> FieldMark {
-        self.board[y][x]
+        self.board[x][y]
     }
     pub fn write_cell(&mut self, x: usize, y: usize, mark: FieldMark) {
         self.board[x][y] = mark;
@@ -98,7 +98,7 @@ impl Board {
                         self.board[i][j] = FieldMark::X;
                         let score = self.minimax(depth + 1, false);
                         self.board[i][j] = FieldMark::Empt;
-                        best_score = std::cmp::max(score, best_score);
+                        best_score = std::cmp::max(score - depth, best_score);
                     }
                 }
             }
@@ -111,7 +111,7 @@ impl Board {
                         self.board[i][j] = FieldMark::O;
                         let score = self.minimax(depth + 1, true);
                         self.board[i][j] = FieldMark::Empt;
-                        best_score = std::cmp::min(score, best_score);
+                        best_score = std::cmp::min(score + depth, best_score);
                     }
                 }
             }

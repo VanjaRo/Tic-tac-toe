@@ -7,8 +7,8 @@ pub enum FieldMark {
 impl FieldMark {
     pub fn scores(&self) -> i32 {
         match self {
-            FieldMark::X => 1,
-            FieldMark::O => -1,
+            FieldMark::X => 10,
+            FieldMark::O => -10,
             FieldMark::Empt => 0,
         }
     }
