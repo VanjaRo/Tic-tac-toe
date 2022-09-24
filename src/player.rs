@@ -63,10 +63,7 @@ impl Player for AiPlayer {
                     let score = board.minimax(0, is_maximazing);
                     board.write_cell(i, j, FieldMark::Empt);
 
-                    if !is_maximazing && score > best_score {
-                        best_score = score;
-                        best_move = (i, j);
-                    } else if is_maximazing && score < best_score {
+                    if !is_maximazing && score > best_score || is_maximazing && score < best_score {
                         best_score = score;
                         best_move = (i, j);
                     }
